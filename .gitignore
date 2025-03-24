@@ -1,0 +1,11 @@
+.dist/
+.vscode/
+bin/
+build/
+out/
+output/
+*.exe
+*.ilk
+*.o
+*.obj
+*.pdb
