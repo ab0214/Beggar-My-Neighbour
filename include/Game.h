@@ -7,12 +7,13 @@ class Game
 {
 public:
     Game(int t_numThreads, int t_gamesPerThread);
-    void run();
+    void runBatch();
+    void runBatchBenchmark();
 
 private:
     std::tuple<int, int> playGame();
     std::tuple<int, int> playGames(int t_games);
-    std::vector<int> shuffleDeck();
+    std::vector<int> generateShuffledDeck();
 
     int m_numThreads;
     int m_gamesPerThread;
