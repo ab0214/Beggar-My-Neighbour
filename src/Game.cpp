@@ -98,7 +98,7 @@ void Game::run()
         std::chrono::duration<double, std::micro> elapsed_us = end - start;
 
         int games = m_numThreads * m_gamesPerThread;
-        int avg_us = elapsed_us.count() / games;
+        double avg_us = elapsed_us.count() / games;
 
         std::cout << "Played " << games << " games in " << elapsed_s.count() << " seconds (Avg: " << avg_us
                   << " us per game).\n"
