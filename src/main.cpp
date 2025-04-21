@@ -1,15 +1,13 @@
 #include <thread>
 #include <atomic>
 #include <iostream>
-#include "Card.h"
-#include "Cards.h"
-#include "Game.h"
+#include "GameRunner.h"
 
 int main()
 {
   int num_threads = std::thread::hardware_concurrency();
   int games_per_thread = 100000;
-  Game game = Game(num_threads, games_per_thread);
+  GameRunner gameRunner = GameRunner(num_threads, games_per_thread);
 
   std::cout << "Using " << num_threads << " threads." << std::endl;
 
@@ -17,7 +15,7 @@ int main()
   while (running)
   {
     std::thread worker([&]()
-                       { while (running) game.runBatchBenchmark(); });
+                       { while (running) gameRunner.runBatchBenchmark(); });
 
     std::cout << "Running. Press enter to stop..." << std::endl;
     std::cin.get();
