@@ -5,4 +5,5 @@ set(CMAKE_BUILD_TYPE Release)
 
 include_directories(${PROJECT_SOURCE_DIR}/include)
 file(GLOB SOURCES "src/*.cpp")
-add_executable(BeggarMyNeighbour ${SOURCES})
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})
+add_executable(${PROJECT_NAME} ${SOURCES})
