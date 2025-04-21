@@ -85,10 +85,12 @@ std::tuple<int, int> playGames(int t_games)
 
 int main()
 {
-  int num_threads = 6;
+  int num_threads = std::thread::hardware_concurrency();
   int games_per_thread = 100000;
   int max_cards = 0;
   int max_tricks = 0;
+
+  std::cout << "Running on " << num_threads << " threads." << std::endl;
 
   while (true)
   {
