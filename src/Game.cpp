@@ -6,14 +6,18 @@
 #include <random>
 #include <vector>
 
-std::tuple<int, int> Game::playGame()
+std::tuple<int, int> Game::playGame(std::vector<int> t_deck)
 {
-    auto deck = generateShuffledDeck();
-    Cards players[] = {Cards(), Cards()};
-    for (int i = 0; i < deck.size(); i += 2)
+    if (t_deck.empty())
     {
-        players[0].insertBottom(new Card(deck[i]));
-        players[1].insertBottom(new Card(deck[i + 1]));
+        t_deck = generateShuffledDeck();
+    }
+
+    Cards players[] = {Cards(), Cards()};
+    for (int i = 0; i < t_deck.size(); i += 2)
+    {
+        players[0].insertBottom(new Card(t_deck[i]));
+        players[1].insertBottom(new Card(t_deck[i + 1]));
     }
 
     Cards pile;
