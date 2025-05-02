@@ -1,15 +1,17 @@
 #include "Genome.h"
+#include "Game.h"
 #include <algorithm>
+#include <array>
 #include <random>
 
-// Genome::Genome() : m_deck(52) {}
-
-Genome::Genome(const std::vector<int> &t_deck) : m_deck(t_deck)
+Genome::Genome()
 {
-    if (t_deck.empty())
-    {
-        m_deck = generateShuffledDeck();
-    }
+    m_deck = generateShuffledDeck();
+}
+
+Genome::Genome(const std::vector<int> t_deck)
+{
+    m_deck = t_deck;
 }
 
 std::vector<int> Genome::generateShuffledDeck()
@@ -37,10 +39,15 @@ void Genome::mutate(double rate)
             std::swap(m_deck[i], m_deck[swapDist(rng)]);
         }
     }
+
+    evaluate();
 }
 
-void Genome::crossover(const Genome &parent2, Genome &child1, Genome &child2, int cutPoint1, int cutPoint2) const
+Genome Genome::crossover(const Genome &parent2, int cutPoint1, int cutPoint2) const
 {
+    cutPoint1 = std::clamp(cutPoint1, -1, 52);
+    cutPoint2 = std::clamp(cutPoint2, -1, 52);
+
     // If the cut points are -1, randomize them
     if (cutPoint1 == -1)
     {
@@ -61,46 +68,54 @@ void Genome::crossover(const Genome &parent2, Genome &child1, Genome &child2, in
         std::swap(cutPoint1, cutPoint2);
     }
 
-    // Create two children based on the crossover points
-    child1.m_deck.clear();
-    child2.m_deck.clear();
+    Genome child = Genome(std::vector<int>(52));
 
-    // Child 1 gets the beginning of parent 1 (this)
-    child1.m_deck.insert(
-        child1.m_deck.begin(),
-        m_deck.begin(),
-        m_deck.begin() + cutPoint1);
-    // Child 1 gets the middle of parent 2 (other)
-    child1.m_deck.insert(
-        child1.m_deck.begin() + cutPoint1,
-        parent2.m_deck.begin() + cutPoint1,
-        parent2.m_deck.begin() + cutPoint2);
-    // Child 1 gets the end of parent 1 (this)
-    child1.m_deck.insert(
-        child1.m_deck.begin() + cutPoint2,
-        m_deck.begin() + cutPoint2,
-        m_deck.end());
+    std::array<int, 5> cardCounts{};
 
-    // Child 2 gets the beginning of parent 2 (other)
-    child2.m_deck.insert(
-        child2.m_deck.begin(),
-        parent2.m_deck.begin(),
-        parent2.m_deck.begin() + cutPoint1);
-    // Child 2 gets the middle of parent 1 (this)
-    child2.m_deck.insert(
-        child2.m_deck.begin() + cutPoint1,
-        m_deck.begin() + cutPoint1,
-        m_deck.begin() + cutPoint2);
-    // Child 2 gets the end of parent 2 (other)
-    child2.m_deck.insert(
-        child2.m_deck.begin() + cutPoint2,
-        parent2.m_deck.begin() + cutPoint2,
-        parent2.m_deck.end());
+    for (size_t i = 0; i < cutPoint1; ++i)
+    {
+        int value = m_deck[i];
+        child.m_deck[i] = value;
+        ++cardCounts[value];
+    }
+
+    for (size_t i = cutPoint2; i < 52; ++i)
+    {
+        int value = m_deck[i];
+        child.m_deck[i] = value;
+        ++cardCounts[value];
+    }
+
+    for (size_t i = cutPoint1, j = 0; i < cutPoint2; ++i)
+    {
+        int value, maxAllowedCount;
+
+        do
+        {
+            value = parent2.m_deck[j++];
+            maxAllowedCount = value == 0 ? 36 : 4;
+        } while (cardCounts[value] >= maxAllowedCount);
+
+        child.m_deck[i] = value;
+        ++cardCounts[value];
+    }
+
+    return child;
 }
 
 const std::vector<int> &Genome::getDeck() const
 {
     return m_deck;
+}
+
+int Genome::evaluate() const
+{
+    if (m_fitness == -1)
+    {
+        auto [cards, tricks] = Game::playGame(m_deck);
+        m_fitness = cards;
+    }
+    return m_fitness;
 }
 
 std::ostream &operator<<(std::ostream &os, const Genome &genome)

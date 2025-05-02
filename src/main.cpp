@@ -4,33 +4,35 @@
 #include <iomanip>
 #include "GameRunner.h"
 #include "Genome.h"
+#include "Island.h"
 
-int main()
+void runRandomGames()
 {
-  // int num_threads = std::thread::hardware_concurrency();
-  // int games_per_thread = 100000;
-  // GameRunner gameRunner = GameRunner(num_threads, games_per_thread);
+  int num_threads = std::thread::hardware_concurrency();
+  int games_per_thread = 100000;
+  GameRunner gameRunner = GameRunner(num_threads, games_per_thread);
 
-  // std::cout << "Using " << num_threads << " threads." << std::endl;
+  std::cout << "Using " << num_threads << " threads." << std::endl;
 
-  // std::atomic<bool> running{true};
-  // while (running)
-  // {
-  //   std::thread worker([&]()
-  //                      { while (running) gameRunner.runBatchBenchmark(); });
+  std::atomic<bool> running{true};
+  while (running)
+  {
+    std::thread worker([&]()
+                       { while (running) gameRunner.runBatchBenchmark(); });
 
-  //   std::cout << "Running. Press enter to stop..." << std::endl;
-  //   std::cin.get();
-  //   running = false;
-  //   worker.join();
+    std::cout << "Running. Press enter to stop..." << std::endl;
+    std::cin.get();
+    running = false;
+    worker.join();
 
-  //   std::cout << "Paused. Press enter to continue..." << std::endl;
-  //   std::cin.get();
-  //   running = true;
-  // }
+    std::cout << "Paused. Press enter to continue..." << std::endl;
+    std::cin.get();
+    running = true;
+  }
+}
 
-  system("cls");
-
+void runTests()
+{
   Genome parent1 = Genome();
   Genome parent2 = Genome();
   std::cout << "Parents" << std::endl
@@ -51,8 +53,8 @@ int main()
 
   for (const auto &[cut1, cut2] : cutPoints)
   {
-    Genome child1, child2;
-    parent1.crossover(parent2, child1, child2, cut1, cut2);
+    Genome child1 = parent1.crossover(parent2, cut1, cut2);
+    Genome child2 = parent2.crossover(parent1, cut1, cut2);
     std::cout << "Crossover (" << cut1 << ", " << cut2 << ")" << std::endl
               << "Child 1  : " << child1 << std::endl
               << "Child 2  : " << child2 << std::endl
@@ -67,7 +69,29 @@ int main()
     std::cout << "Mutation rate " << rate << " : " << mutated << std::endl;
   }
 
-  std::cin.get();
+  // std::cin.get();
+}
 
+void runGA()
+{
+  Island island = Island();
+  while (true)
+  {
+    for (int i = 0; i < 500; i++)
+    {
+      island.evolve();
+    }
+    Genome best = island.getBestGenome();
+    std::cout << best << std::endl
+              << "Best: " << best.evaluate() << std::endl
+              << "Average: " << island.getAverageFitness() << std::endl;
+  }
+}
+
+int main()
+{
+  system("cls");
+  runTests();
+  runGA();
   return 0;
 }
