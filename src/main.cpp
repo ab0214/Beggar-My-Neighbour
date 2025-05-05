@@ -4,6 +4,7 @@
 #include <iomanip>
 #include "GameRunner.h"
 #include "Genome.h"
+#include "GenomeOperations.h"
 #include "Island.h"
 
 void runRandomGames()
@@ -53,8 +54,8 @@ void runTests()
 
   for (const auto &[cut1, cut2] : cutPoints)
   {
-    Genome child1 = parent1.crossover(parent2, cut1, cut2);
-    Genome child2 = parent2.crossover(parent1, cut1, cut2);
+    Genome child1 = GenomeOperations::crossover(parent1, parent2, cut1, cut2);
+    Genome child2 = GenomeOperations::crossover(parent2, parent1, cut1, cut2);
     std::cout << "Crossover (" << cut1 << ", " << cut2 << ")" << std::endl
               << "Child 1  : " << child1 << std::endl
               << "Child 2  : " << child2 << std::endl
@@ -64,8 +65,7 @@ void runTests()
   std::cout << std::fixed << std::setprecision(2);
   for (double rate : {0.0, 0.01, 0.1, 0.25, 0.5, 0.75, 0.99, 1.0})
   {
-    Genome mutated = parent1; // Copy original
-    mutated.mutate(rate);
+    Genome mutated = GenomeOperations::mutate(parent1, rate); // Copy original
     std::cout << "Mutation rate " << rate << " : " << mutated << std::endl;
   }
 

@@ -1,4 +1,5 @@
 #include "Island.h"
+#include "GenomeOperations.h"
 #include <algorithm>
 #include <iostream>
 
@@ -29,7 +30,7 @@ void Island::evolve()
               });
 
     // Keep top 10% as elites
-    int elite_count = POPULATION_SIZE * 0.1;
+    int elite_count = POPULATION_SIZE / 10;
     std::vector<Genome> newPop;
     for (int i = 0; i < elite_count; ++i)
         newPop.push_back(m_population[i]);
@@ -38,8 +39,7 @@ void Island::evolve()
     for (int i = 0; i < elite_count; ++i)
     {
         Genome original = m_population[i];
-        Genome mutated = Genome(original.getDeck());
-        mutated.mutate(0.05);
+        Genome mutated = GenomeOperations::mutate(original, 0.05);
         newPop.push_back(mutated);
     }
 
@@ -60,10 +60,10 @@ void Island::evolve()
         Genome parent1 = newPop[i1];
         Genome parent2 = newPop[i2];
 
-        Genome child1 = parent1.crossover(parent2);
-        Genome child2 = parent2.crossover(parent1);
-        child1.mutate(0.05);
-        child2.mutate(0.05);
+        Genome child1 = GenomeOperations::crossover(parent1, parent2);
+        Genome child2 = GenomeOperations::crossover(parent2, parent1);
+        GenomeOperations::mutateInPlace(child1, 0.05);
+        GenomeOperations::mutateInPlace(child2, 0.05);
 
         newPop.push_back(child1);
         if (newPop.size() < POPULATION_SIZE)
