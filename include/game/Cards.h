@@ -1,7 +1,9 @@
 #pragma once
 
-#include "Card.h"
-#include <iostream>
+#include <ostream>
+#include <vector>
+
+class Card; // Forward declaration
 
 class Cards
 {

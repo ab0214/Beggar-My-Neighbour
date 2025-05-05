@@ -1,8 +1,8 @@
-#include "Game.h"
+#include "game/Game.h"
+
+#include "game/Card.h"
+#include "game/Cards.h"
 #include <algorithm>
-#include <chrono>
-#include <future>
-#include <iostream>
 #include <random>
 #include <vector>
 

@@ -1,4 +1,5 @@
-#include "Cards.h"
+#pragma once
+
 #include <tuple>
 #include <vector>
 

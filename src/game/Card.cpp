@@ -1,4 +1,5 @@
-#include "Card.h"
+#include "game/Card.h"
+
 #include <stdexcept>
 
 Card::Card(int v) : value(v)

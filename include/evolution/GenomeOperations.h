@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Genome.h"
+class Genome; // Forward declaration
 
 class GenomeOperations
 {

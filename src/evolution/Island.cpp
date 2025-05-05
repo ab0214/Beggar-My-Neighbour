@@ -1,7 +1,11 @@
-#include "Island.h"
-#include "GenomeOperations.h"
+#include "evolution/Island.h"
+
+#include "evolution/Genome.h"
+#include "evolution/GenomeOperations.h"
 #include <algorithm>
 #include <iostream>
+#include <random>
+#include <vector>
 
 const int POPULATION_SIZE = 200;
 

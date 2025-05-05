@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include <iostream>
+#include <ostream>
 
 class GenomeOperations; // Forward declaration
 

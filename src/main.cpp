@@ -1,11 +1,11 @@
-#include <thread>
+#include "evolution/Genome.h"
+#include "evolution/GenomeOperations.h"
+#include "evolution/Island.h"
+#include "game/GameRunner.h"
 #include <atomic>
-#include <iostream>
 #include <iomanip>
-#include "GameRunner.h"
-#include "Genome.h"
-#include "GenomeOperations.h"
-#include "Island.h"
+#include <iostream>
+#include <thread>
 
 void runRandomGames()
 {

@@ -1,6 +1,8 @@
-#include "Genome.h"
+#pragma once
+
 #include <vector>
-#include <random>
+
+class Genome; // Forward declaration
 
 class Island
 {

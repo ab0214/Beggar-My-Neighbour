@@ -1,7 +1,9 @@
-#include "GenomeOperations.h"
-#include <random>
+#include "evolution/GenomeOperations.h"
+
+#include "evolution/Genome.h"
 #include <algorithm>
 #include <array>
+#include <random>
 
 void GenomeOperations::mutateInPlace(Genome &genome, double rate)
 {
