@@ -2,9 +2,9 @@
 
 #include <stdexcept>
 
-Card::Card(int v) : value(v)
+Card::Card(int value) : m_value(value)
 {
-    if (v < 0 || v > 4)
+    if (value < 0 || value > 4)
     {
         throw std::invalid_argument("Card's value must be between 0 and 4");
     }
@@ -24,11 +24,11 @@ Card::~Card()
 
 int Card::getValue() const
 {
-    return value;
+    return m_value;
 }
 
 char Card::getSymbol() const
 {
     static const char symbols[] = {'-', 'J', 'Q', 'K', 'A'};
-    return (value >= 1 && value <= 4) ? symbols[value] : '-';
+    return (m_value >= 1 && m_value <= 4) ? symbols[m_value] : '-';
 }

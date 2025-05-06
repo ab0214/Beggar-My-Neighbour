@@ -1,10 +1,11 @@
 #include "evolution/Genome.h"
 
-#include "game/Game.h"
 #include <algorithm>
 #include <iostream>
 #include <random>
 #include <vector>
+
+#include "game/Game.h"
 
 Genome::Genome()
 {

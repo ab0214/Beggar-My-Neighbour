@@ -1,11 +1,12 @@
 #include "game/GameRunner.h"
 
-#include "game/Game.h"
 #include <algorithm>
 #include <chrono>
 #include <future>
 #include <iostream>
 #include <tuple>
+
+#include "game/Game.h"
 
 GameRunner::GameRunner(int numThreads, int gamesPerThread)
     : m_numThreads(numThreads), m_gamesPerThread(gamesPerThread) {}

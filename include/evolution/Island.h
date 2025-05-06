@@ -2,7 +2,7 @@
 
 #include <vector>
 
-class Genome; // Forward declaration
+#include "evolution/Genome.h"
 
 class Island
 {

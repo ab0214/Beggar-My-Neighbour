@@ -1,18 +1,14 @@
 #include "game/Game.h"
 
-#include "game/Card.h"
-#include "game/Cards.h"
 #include <algorithm>
 #include <random>
 #include <vector>
 
+#include "game/Card.h"
+#include "game/Cards.h"
+
 std::tuple<int, int> Game::playGame(std::vector<int> t_deck)
 {
-    if (t_deck.empty())
-    {
-        t_deck = generateShuffledDeck();
-    }
-
     Cards players[] = {Cards(), Cards()};
     for (int i = 0; i < t_deck.size(); i += 2)
     {

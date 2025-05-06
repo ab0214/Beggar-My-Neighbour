@@ -3,7 +3,7 @@
 #include <ostream>
 #include <vector>
 
-class Card; // Forward declaration
+#include <game/Card.h>
 
 class Cards
 {

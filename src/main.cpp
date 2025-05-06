@@ -1,11 +1,12 @@
-#include "evolution/Genome.h"
-#include "evolution/GenomeOperations.h"
-#include "evolution/Island.h"
-#include "game/GameRunner.h"
 #include <atomic>
 #include <iomanip>
 #include <iostream>
 #include <thread>
+
+#include "evolution/Genome.h"
+#include "evolution/GenomeOperations.h"
+#include "evolution/Island.h"
+#include "game/GameRunner.h"
 
 void runRandomGames()
 {
@@ -66,6 +67,7 @@ void runTests()
   for (double rate : {0.0, 0.01, 0.1, 0.25, 0.5, 0.75, 0.99, 1.0})
   {
     Genome mutated = GenomeOperations::mutate(parent1, rate); // Copy original
+    std::cout << "Original           : " << parent1 << std::endl;
     std::cout << "Mutation rate " << rate << " : " << mutated << std::endl;
   }
 

@@ -1,7 +1,8 @@
 #include "game/Cards.h"
 
-#include "game/Card.h"
 #include <ostream>
+
+#include "game/Card.h"
 
 Cards::Cards() {}
 
