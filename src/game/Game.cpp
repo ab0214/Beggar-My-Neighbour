@@ -30,13 +30,13 @@ std::tuple<int, int> Game::playGame(std::vector<int> t_deck)
             {
                 turn = !turn;
                 penalty = pile.getBottom()->getValue();
-                tricks++;
                 continue;
             }
             else if (--penalty == 0)
             {
                 turn = !turn;
                 players[turn].splice(&pile);
+                ++tricks;
             }
             continue;
         }
