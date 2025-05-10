@@ -4,7 +4,7 @@ This C++ program implements a genetic algorithm to find long instances of the ca
 
 ## Features
 - Beggar-my-neighbour simulation.
-- Genetic algorithm to optimize deck configurations for the longest game.
+- Genetic algorithm to optimize deck configuration for the longest game.
 - Supports mutation, crossover, and truncation selection.
 
 ## Usage
@@ -14,7 +14,7 @@ Beggar-My-Neighbour [logInterval] [populationSize] [mutationRate] [selectionRate
 ```
 - **logInterval**: Print progress every N generations (default: 100)
 - **populationSize**: Number of individuals in each generation (default: 100)
-- **mutationRate**: Chance of mutation per individual (0.0–1.0, default: 0.1)
+- **mutationRate**: Fraction of cards to reshuffle in each individual deck (0.0–1.0, default: 0.1)
 - **selectionRate**: Fraction of top individuals selected for reproduction (0.0–1.0, default: 0.25)
 
 ## Build requirements
