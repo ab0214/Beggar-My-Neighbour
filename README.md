@@ -1,4 +1,4 @@
-# Beggar-My-Neighbor
+# Beggar-My-Neighbour
 
 This C++ program implements a genetic algorithm to find long instances of the card game [**Beggar-my-neighbour**](https://en.wikipedia.org/wiki/Beggar_my_neighbour).
 
