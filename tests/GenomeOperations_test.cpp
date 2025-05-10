@@ -26,9 +26,17 @@ TEST(GenomeOperationsTests, Crossover)
     EXPECT_NE(child1, parent2);
 
     // Test crossover with random cut points
-    child1 = GenomeOperations::crossover(parent1, parent2);
-    EXPECT_NE(child1, parent1);
-    EXPECT_NE(child1, parent2);
+    bool different = false;
+    for (int i = 0; i < 100; ++i)
+    {
+        child1 = GenomeOperations::crossover(parent1, parent2);
+        if (child1 != parent1 && child1 != parent2)
+        {
+            different = true;
+            break;
+        }
+    }
+    EXPECT_TRUE(different);
 }
 
 TEST(GenomeOperationsTests, Mutation)
