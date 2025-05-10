@@ -11,7 +11,4 @@ public:
     /// If empty, a shuffled deck will be generated.
     /// @return The length of the game (cards, tricks).
     static std::tuple<int, int> playGame(std::vector<int> deck = {});
-
-private:
-    static std::vector<int> generateShuffledDeck();
 };
