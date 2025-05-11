@@ -6,68 +6,74 @@
 
 Cards::Cards() {}
 
-Cards::~Cards() { delete m_top; }
-
-Card *Cards::getBottom() { return m_bottom; }
-
-bool Cards::isEmpty() const { return (m_top == nullptr || m_bottom == nullptr); }
-
-void Cards::insertTop(Card *t_newCard)
+Cards::~Cards()
 {
-    if (isEmpty())
+    while (m_top != nullptr)
     {
-        m_top = t_newCard;
-        m_bottom = t_newCard;
-        t_newCard->m_next = nullptr;
-        return;
+        Card *temp = m_top->m_next;
+        m_top->m_next = nullptr; // Prevent recursion if Card has a destructor.
+        delete m_top;
+        m_top = temp;
     }
-
-    t_newCard->m_next = m_top;
-    m_top = t_newCard;
 }
 
-void Cards::insertBottom(Card *t_newCard)
+Card *Cards::bottom() const { return m_bottom; }
+
+bool Cards::empty() const
 {
-    if (isEmpty())
+    return (m_top == nullptr || m_bottom == nullptr);
+}
+
+void Cards::addToTop(Card *card)
+{
+    if (empty())
     {
-        m_top = t_newCard;
-        m_bottom = t_newCard;
-        t_newCard->m_next = nullptr;
+        m_top = card;
+        m_bottom = card;
+        card->m_next = nullptr;
         return;
     }
 
-    m_bottom->m_next = t_newCard;
-    m_bottom = t_newCard;
+    card->m_next = m_top;
+    m_top = card;
+}
+
+void Cards::addToBottom(Card *card)
+{
+    if (empty())
+    {
+        m_top = card;
+        m_bottom = card;
+        card->m_next = nullptr;
+        return;
+    }
+
+    m_bottom->m_next = card;
+    m_bottom = card;
     m_bottom->m_next = nullptr;
 }
 
-void Cards::splice(Cards *t_newCards)
+void Cards::addToBottom(Cards *other)
 {
-    if (t_newCards->isEmpty())
+    if (other->empty())
     {
         return;
     }
 
-    if (isEmpty())
+    if (empty())
     {
-        m_top = t_newCards->m_top;
-        m_bottom = t_newCards->m_bottom;
+        m_top = other->m_top;
+        m_bottom = other->m_bottom;
         return;
     }
 
-    m_bottom->m_next = t_newCards->m_top;
-    m_bottom = t_newCards->m_bottom;
+    m_bottom->m_next = other->m_top;
+    m_bottom = other->m_bottom;
 
-    t_newCards->clear();
+    other->clear();
 }
 
-void Cards::clear()
-{
-    m_top = nullptr;
-    m_bottom = nullptr;
-}
-
-Card *Cards::pop()
+Card *Cards::takeFromTop()
 {
     if (m_top == nullptr)
         return nullptr;
@@ -78,13 +84,19 @@ Card *Cards::pop()
     return temp;
 }
 
-std::ostream &operator<<(std::ostream &t_ostream, const Cards &t_cards)
+std::ostream &operator<<(std::ostream &ostream, const Cards &cards)
 {
-    Card *current = t_cards.m_top;
+    Card *current = cards.m_top;
     while (current != nullptr)
     {
-        t_ostream << current->getSymbol();
-        current = current->m_next;
+        ostream << current->symbol();
+        current = current->next();
     }
-    return t_ostream;
+    return ostream;
+}
+
+void Cards::clear()
+{
+    m_top = nullptr;
+    m_bottom = nullptr;
 }

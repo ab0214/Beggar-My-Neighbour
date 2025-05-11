@@ -8,16 +8,16 @@ TEST(CardTests, Constructor)
     Card queen(2);
     Card king(3);
     Card ace(4);
-    EXPECT_EQ(num.getValue(), 0);
-    EXPECT_EQ(num.getSymbol(), '-');
-    EXPECT_EQ(jack.getValue(), 1);
-    EXPECT_EQ(jack.getSymbol(), 'J');
-    EXPECT_EQ(queen.getValue(), 2);
-    EXPECT_EQ(queen.getSymbol(), 'Q');
-    EXPECT_EQ(king.getValue(), 3);
-    EXPECT_EQ(king.getSymbol(), 'K');
-    EXPECT_EQ(ace.getValue(), 4);
-    EXPECT_EQ(ace.getSymbol(), 'A');
+    EXPECT_EQ(num.value(), 0);
+    EXPECT_EQ(num.symbol(), '-');
+    EXPECT_EQ(jack.value(), 1);
+    EXPECT_EQ(jack.symbol(), 'J');
+    EXPECT_EQ(queen.value(), 2);
+    EXPECT_EQ(queen.symbol(), 'Q');
+    EXPECT_EQ(king.value(), 3);
+    EXPECT_EQ(king.symbol(), 'K');
+    EXPECT_EQ(ace.value(), 4);
+    EXPECT_EQ(ace.symbol(), 'A');
 }
 
 TEST(CardTests, InvalidValue)
