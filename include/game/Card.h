@@ -11,23 +11,27 @@ public:
   /// @throws std::invalid_argument if value is not between 0 and 4.
   Card(int value = 0);
 
-  /// @brief Destructor.
-  /// @note Also deletes the next cards in the linked list.
-  ~Card();
-
   /// @brief Integer representation of the card.
   /// @return 0, 1, 2, 3, or 4.
-  int getValue() const;
+  int value() const;
 
   /// @brief Character representation of the card.
   /// @return '-', 'J', 'Q', 'K', or 'A'.
-  char getSymbol() const;
+  char symbol() const;
 
-  /// @brief Pointer to the next card in the linked list.
-  Card *m_next = nullptr;
+  /// @brief Next card in the linked list.
+  /// @return Pointer to the next card in the linked list.
+  /// @note Can be null if this is the last card in the list.
+  Card *next() const;
+
+  // Grants Cards access to private members of Card.
+  friend class Cards;
 
 private:
   /// @brief The value of the card (0-4).
   /// 0 = Number card, 1 = Jack, 2 = Queen, 3 = King, 4 = Ace.
-  int m_value;
+  int m_value = 0;
+
+  /// @brief Pointer to the next card in the linked list.
+  Card *m_next = nullptr;
 };

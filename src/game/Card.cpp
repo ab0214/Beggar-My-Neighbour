@@ -10,25 +10,18 @@ Card::Card(int value) : m_value(value)
     }
 }
 
-Card::~Card()
-{
-    auto top = m_next;
-    while (top != nullptr)
-    {
-        auto current = top;
-        top = current->m_next;
-        current->m_next = nullptr; // Prevent recursion.
-        delete current;
-    }
-}
-
-int Card::getValue() const
+int Card::value() const
 {
     return m_value;
 }
 
-char Card::getSymbol() const
+char Card::symbol() const
 {
     static const char symbols[] = {'-', 'J', 'Q', 'K', 'A'};
     return (m_value >= 1 && m_value <= 4) ? symbols[m_value] : '-';
+}
+
+Card *Card::next() const
+{
+    return m_next;
 }

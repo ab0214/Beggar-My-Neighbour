@@ -7,13 +7,13 @@
 #include "game/Card.h"
 #include "game/Cards.h"
 
-std::tuple<int, int> Game::playGame(std::vector<int> t_deck)
+std::tuple<int, int> Game::playGame(std::vector<int> deck)
 {
     Cards players[] = {Cards(), Cards()};
-    for (int i = 0; i < t_deck.size(); i += 2)
+    for (int i = 0; i < deck.size(); i += 2)
     {
-        players[0].insertBottom(new Card(t_deck[i]));
-        players[1].insertBottom(new Card(t_deck[i + 1]));
+        players[0].addToBottom(new Card(deck[i]));
+        players[1].addToBottom(new Card(deck[i + 1]));
     }
 
     Cards pile;      // Pile into which cards are played
@@ -23,17 +23,17 @@ std::tuple<int, int> Game::playGame(std::vector<int> t_deck)
         turn = 0,    // Who's turn it is (0 or 1)
         penalty = 0; // Penalty left to pay (0 if no penalty)
 
-    while (!players[0].isEmpty() && !players[1].isEmpty())
+    while (!players[0].empty() && !players[1].empty())
     {
-        Card *playedCard = players[turn].pop(); // Take card from player's hand.
-        pile.insertBottom(playedCard);          // Place it in the pile.
-        ++cards;                                // Increment statistics.
+        Card *playedCard = players[turn].takeFromTop(); // Take card from hand.
+        pile.addToBottom(playedCard);                   // Place it in the pile.
+        ++cards;                                        // Increment statistics.
 
         // If the player is NOT paying penalty:
         if (penalty == 0)
         {
             // Value of played card determines penalty for next player, if any.
-            penalty = playedCard->getValue();
+            penalty = playedCard->value();
             turn = !turn; // Switch turns.
             continue;     // No other actions needed, next player continues.
         }
@@ -44,26 +44,26 @@ std::tuple<int, int> Game::playGame(std::vector<int> t_deck)
             --penalty; // A card was played, decrement remaining penalty.
 
             // If the played card was a penalty card:
-            if (playedCard->getValue() > 0)
+            if (playedCard->value() > 0)
             {
                 // Store its value, other player has to pay penalty next turn.
-                penalty = playedCard->getValue();
+                penalty = playedCard->value();
                 turn = !turn; // This player's penalty ceases, switch turns.
                 continue;     // No other actions needed, next player continues.
             }
 
             // If the played card was a not a penalty card:
-            if (playedCard->getValue() == 0) // (Redundant check, for clarity.)
+            if (playedCard->value() == 0) // (Redundant check, for clarity.)
             {
                 // If remaining penalty is zero,
                 // (current player has not played a penalty card)
                 // the other player wins the trick, and takes the pile:
                 if (penalty == 0)
                 {
-                    turn = !turn;                // Switch turns.
-                    players[turn].splice(&pile); // Take pile.
-                    ++tricks;                    // Increment statistics.
-                    continue;                    // Next player continues.
+                    turn = !turn;                     // Switch turns.
+                    players[turn].addToBottom(&pile); // Take pile.
+                    ++tricks;                         // Increment statistics.
+                    continue;                         // Next player continues.
                 }
 
                 // If there is still penalty left to pay:

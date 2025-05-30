@@ -1,11 +1,15 @@
 # Beggar-My-Neighbour
 
-This C++ program implements a genetic algorithm to find long instances of the card game [**Beggar-my-neighbour**](https://en.wikipedia.org/wiki/Beggar_my_neighbour).
+This project uses a genetic algorithm to find long-running games of [**Beggar-my-neighbour**](https://en.wikipedia.org/wiki/Beggar_my_neighbour).
+
+Created to explore C++ and share as part of a personal portfolio.
 
 ## Features
 - Beggar-my-neighbour simulation.
-- Genetic algorithm to optimize deck configuration for the longest game.
+- Genetic algorithm to optimize starting configuration for the longest game.
 - Supports mutation, crossover, and truncation selection.
+- Unit tests using [GoogleTest](https://github.com/google/googletest).
+- Performance benchmarks using [Google Benchmark](https://github.com/google/benchmark).
 
 ## Usage
 Run the program with the following optional command line arguments:
@@ -20,4 +24,4 @@ Beggar-My-Neighbour [logInterval] [populationSize] [mutationRate] [selectionRate
 ## Build requirements
 - **CMake** ≥ 3.14
 - **C++17** compatible compiler (e.g., GCC 7+, Clang 5+, MSVC 2017+)
-- **Git** (for downloading GoogleTest via FetchContent)
+- **Git** (for downloading GoogleTest and Google Benchmark via FetchContent)

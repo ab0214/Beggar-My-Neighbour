@@ -12,9 +12,9 @@ Genome::Genome()
     m_deck = generateShuffledDeck();
 }
 
-Genome::Genome(const std::vector<int> t_deck)
+Genome::Genome(const std::vector<int> deck)
 {
-    m_deck = t_deck;
+    m_deck = deck;
 }
 
 std::vector<int> Genome::generateShuffledDeck()
